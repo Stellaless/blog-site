@@ -1,0 +1,7 @@
+# Hugo编译产物
+public/
+resources/
+.hugo_build.lock
+# 系统垃圾文件
+.DS_Store
+Thumbs.db

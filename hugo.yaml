@@ -1,0 +1,87 @@
+# Hugo基础全局配置
+baseURL: "/"
+languageCode: zh-cn
+defaultContentLanguage: zh-cn
+title: "没有星星的技术博客"
+theme: "PaperMod"
+enableEmoji: true
+hasCJKLanguage: true # 中文换行优化
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+paginate: 10 # 每页文章数量
+summaryLength: 120
+permalinks:
+  posts: "/posts/:title/" # 文章链接格式化
+
+# 输出配置（搜索功能必须）
+outputs:
+  home: ["HTML", "RSS", "JSON"]
+
+# 顶部导航菜单
+menu:
+  main:
+    - name: 首页
+      url: /
+      weight: 1
+    - name: 文章
+      url: /posts/
+      weight: 2
+    - name: 归档
+      url: /archives/
+      weight: 3
+    - name: 标签
+      url: /tags/
+      weight: 4
+    - name: 搜索
+      url: /search/
+      weight: 5
+    - name: 关于
+      url: /about/
+      weight: 6
+
+# PaperMod主题参数（核心自定义区）
+params:
+  # 主题模式：auto自动跟随系统 / light亮色 / dark暗色
+  defaultTheme: auto
+  disableThemeToggle: false # 开启明暗切换按钮
+
+  # 页面组件开关
+  ShowBreadCrumbs: true # 面包屑导航
+  ShowReadingTime: true # 阅读时长
+  ShowPostNavLinks: true # 上一篇/下一篇
+  ShowCodeCopyButtons: true # 代码块复制按钮
+  ShowWordCount: true # 字数统计
+  ShowRssButtonInSectionTermList: true
+  UseHugoToc: true # 文章目录
+
+  # 首页横幅介绍
+  homeInfoParams:
+    Title: "👋 欢迎来访"
+    Content: "记录运维、技术踩坑与日常随笔"
+
+  # 首页社交图标（支持GitHub、Email、知乎、CSDN等）
+  socialIcons:
+    - name: github
+      url: "https://github.com/Stellaless"
+    - name: email
+      url: "mailto:starshaobo@163.com"
+
+  # 站内搜索配置
+  search: true
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 2
+    keys: ["title", "permalink", "summary", "content"]
+
+# 代码高亮配置
+markup:
+  highlight:
+    noClasses: false
+    lineNos: true # 代码行号
+    style: monokai
