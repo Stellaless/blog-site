@@ -1,0 +1,89 @@
+{{- /* https://schema.org/docs/schemas.html */ -}}
+{{- $iso8601 := "2006-01-02T15:04:05-07:00" -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type":"WebSite",
+      "@id":"{{ .Site.BaseURL }}#website",
+      "url":"{{ .Site.BaseURL }}",
+      "name":"{{ .Site.Title }}",
+      {{- with .Site.Params.description }}
+      "description":"{{ . }}",
+      {{- end }}
+      "publisher": {
+        "@id":"{{ .Site.BaseURL }}#person"
+      }
+    },
+    {
+      "@type":"Person",
+      "@id":"{{ .Site.BaseURL }}#person",
+      "name":"{{ .Site.Params.author.name }}",
+      {{- with .Site.Params.author.avatar }}
+      "image":"{{ . | absURL }}",
+      {{- end }}
+      {{- with .Site.Params.author.social }}
+      "sameAs":[
+        {{- range $index, $val := . }}
+        "{{ $val }}"{{ if ne $index (sub (len .) 1) }},{{ end }}
+        {{- end }}
+      ]
+      {{- end }}
+    },
+    {
+      "@type":"WebPage",
+      "@id":"{{ .Permalink }}#webpage",
+      "url":"{{ .Permalink }}",
+      "name":"{{ .Title }}",
+      "isPartOf":{"@id":"{{ .Site.BaseURL }}#website"},
+      {{- if not .Date.IsZero }}
+      "datePublished":"{{ .Date.Format $iso8601 }}",
+      {{- end }}
+      {{- if not .Lastmod.IsZero }}
+      "dateModified":"{{ .Lastmod.Format $iso8601 }}",
+      {{- end }}
+      {{- with .Params.description }}
+      "description":"{{ . }}",
+      {{- end }}
+      "potentialAction":[
+        {
+          "@type":"ReadAction",
+          "target":["{{ .Permalink }}"]
+        }
+      ]
+    }
+    {{- if not .IsHome }}
+    ,{
+      "@type":"BreadcrumbList",
+      "@id":"{{ .Permalink }}#breadcrumblist",
+      "itemListElement":[
+        {{- $bc := slice }}
+        {{- range .Ancestors.Reverse }}
+        {{- $bc = $bc | append (dict "@type" "ListItem" "position" (len $bc | add 1) "name" .Title "item" .Permalink ) }}
+        {{- end }}
+        {{- $bc = $bc | append (dict "@type" "ListItem" "position" (len $bc | add 1) "name" .Title "item" .Permalink ) }}
+        {{- range $index,$item := $bc }}
+        {{ toJson $item }}{{ if ne $index (sub (len $bc) 1) }},{{ end }}
+        {{- end }}
+      ]
+    }
+    {{- end }}
+    {{- if eq .Kind "page" }}
+    ,{
+      "@type":"Article",
+      "@id":"{{ .Permalink }}#article",
+      "mainEntityOfPage":{"@id":"{{ .Permalink }}#webpage"},
+      "headline":"{{ .Title }}",
+      {{- with .Params.cover }}
+      "image":"{{ .image | absURL }}",
+      {{- end }}
+      "datePublished":"{{ .Date.Format $iso8601 }}",
+      "dateModified":"{{ .Lastmod.Format $iso8601 }}",
+      "author":{"@id":"{{ .Site.BaseURL }}#person"},
+      "publisher":{"@id":"{{ .Site.BaseURL }}#person"}
+    }
+    {{- end }}
+  ]
+}
+</script>
