@@ -1,10 +1,10 @@
-+++
+---
 date = '2026-08-14T10:09:53+08:00'
 draft = false
 title = 'K8s中kubelet模式配置为Webhook的相关总结'
 categories: ["学习笔记"]
 tags: ["k8s","CKS"]
-+++
+---
 
  最近在学习CKS时，修改kubelet认证模式这道题，ai说mode改为Webhook会直接造成死锁，后对这个参数进行学习，总结如下：
 
