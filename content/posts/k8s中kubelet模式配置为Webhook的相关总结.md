@@ -1,7 +1,7 @@
 ---
-date = '2026-08-14T10:09:53+08:00'
-draft = false
-title = 'K8s中kubelet模式配置为Webhook的相关总结'
+title: "K8s中kubelet模式配置为Webhook的相关总结"
+date: 2026-08-14T10:09:53+08:00
+draft: false
 categories: ["学习笔记"]
 tags: ["k8s","CKS"]
 ---
